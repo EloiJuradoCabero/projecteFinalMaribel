@@ -1,0 +1,78 @@
+version: '2.0'
+services:
+
+    #PHP Service
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: php:8.1.1-fpm
+        container_name: php
+        restart: unless-stopped
+        tty: true
+        environment:
+            SERVICE_NAME: php
+            SERVICE_TAGS: dev
+        working_dir: /var/www/html/
+        volumes:
+            - ./:/var/www/html/
+            - ./php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+        networks:
+            - web-network
+
+        #Nginx Service
+    web:
+        image: nginx:alpine
+        container_name: web
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./:/var/www/html/
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - web-network
+
+        #MySQL Service
+    mysql:
+        image: mysql:8.0
+        container_name: mysql
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: escape-room
+            MYSQL_ROOT_PASSWORD: 1qaz!QAZ
+            MYSQL_USER: eloi
+            MYSQL_PASSWORD: 1qaz!QAZ
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - mysqldata:/var/lib/mysql/
+            - ./mysql/my.cnf:/etc/mysql/my.cnf
+            - ./mysql-files:/var/lib/mysql-files
+        networks:
+                - web-network
+
+
+        #PHPMyAdmin Service
+    myadmin:
+        image: phpmyadmin:latest
+        environment:
+            PMA_HOST: mysql
+        ports:
+            - "8080:80"
+        networks:
+            - web-network
+
+        #Docker Networks
+networks:
+    web-network:
+        driver: bridge
+    #Volumes
+volumes:
+    mysqldata:
+        driver: local
