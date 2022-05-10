@@ -5,7 +5,9 @@
 
     <div class="mt-3 d-flex flex-row justify-content-between">
         <h3 class="">Jocs</h3>
-        <a href='../controllers/nouSorteigController.php' class='btn btn-success'>Nou Sorteig</a>
+        @if(isset(request()->user()->isAdmin))
+        <a href='/crearJoc' class='btn btn-success'>Crear nou Joc</a>
+        @endif
     </div>
 
 
@@ -285,7 +287,11 @@
                                            name="horadia" value="2022-06-12T19:30"
                                            min="2018-06-07T00:00" max="2022-06-14T00:00">
 
-                                    <button type="submit" class="btn btn-success">Success</button>
+                                    @if(isset(request()->user()->isAdmin))
+                                        <button class="btn btn-danger">NO POTS RESERVAR</button>
+                                    @else
+                                        <button type="submit" class="btn btn-success">Reservar</button>
+                                    @endif
                                 </form>
                             </div>
 

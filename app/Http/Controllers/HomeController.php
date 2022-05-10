@@ -28,4 +28,14 @@ class HomeController extends Controller
         return redirect('auth');
 
     }
+
+    public function getJocs(){
+        $jocs=Joc::get()->map->only(['id','name','description','img','isReservat']);
+        $arrayJocs = array();
+        foreach ($jocs as $joc){
+            array_push($arrayJocs,$joc);
+        }
+
+        return "hello";
+    }
 }

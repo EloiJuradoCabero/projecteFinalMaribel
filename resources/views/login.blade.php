@@ -45,9 +45,7 @@
 
                             <div class="form-group">
                                 <label for="password">Constrasenya
-                                    <a href="forgot.html" class="float-right">
-                                        No ten recordes?
-                                    </a>
+
                                 </label>
                                 <input id="password" type="password" class="form-control" name="password" required data-eye>
                                 <div class="invalid-feedback">
@@ -60,6 +58,12 @@
                                     <input type="checkbox" name="remember" id="remember" class="custom-control-input">
                                     <label for="remember" class="custom-control-label">Recorda</label>
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                <a href="/register" class="float-right">
+                                    Registrar-te
+                                </a>
                             </div>
 
                             <div class="form-group m-0">

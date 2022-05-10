@@ -1,8 +1,11 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\Empleat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use function PHPUnit\Framework\isEmpty;
 
 class AuthController extends Controller
 {
@@ -22,8 +25,14 @@ class AuthController extends Controller
 
        if (Auth::attempt($credentials)){
            \request()->session()->regenerate();
+
+           if (isset(\request()->user()->isEmpleat)){
+               \session()->put('isEmpleat', true);
+           }
+
            return redirect('home');
        };
+
 
        session()->put('err_credentials', true);
        return redirect('auth');
@@ -31,8 +40,10 @@ class AuthController extends Controller
     }
 
     public function logout(){
+        \session()->put('isEmpleat', false);
         Session::flush();
         Auth::logout();
+
 
         return redirect('auth');
 

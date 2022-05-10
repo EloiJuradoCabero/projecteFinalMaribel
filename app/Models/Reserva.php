@@ -19,6 +19,7 @@ class Reserva extends Model
         'id',
         'id_joc',
         'id_user',
+        'id_empleat',
         'telefon',
         'day',
         'hour',

@@ -17,12 +17,13 @@ class CreateReservasTable extends Migration
             $table->id();
             $table->foreignId('id_joc')->references('id')->on('jocs');
             $table->foreignId('id_user')->references('id')->on('users');
+            $table->foreignId('id_empleat')->nullable()->references('id')->on('users');
             $table->string('telefon');
             $table->string('day');
             $table->string('hour');
             $table->string('pais');
             $table->string('organitzacio');
-            $table->boolean('isConfirmed');
+            $table->boolean('isConfirmed')->nullable();
             $table->timestamps();
         });
     }
